@@ -5,7 +5,7 @@ on:
 
 jobs:
   build-mac:
-    runs-on: macos-latest
+    runs-on: macos-13
 
     steps:
       - name: Checkout repository
@@ -17,20 +17,25 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: |
-          npm install
+        run: npm install
 
       - name: Build Electron app
-        run: |
-          npm run build
+        run: npm run build -- --publish=never
 
-      - name: Zip .app
+      - name: Upload macOS artifacts
         run: |
-          cd dist
-          zip -r ZQRadar-mac-intel.app.zip *.app
-
+          if compgen -G "dist/*.zip" > /dev/null; then
+            echo "Uploading zip files..."
+          else
+            echo "No zip files found in dist/"
+          fi
+          if compgen -G "dist/*.dmg" > /dev/null; then
+            echo "Uploading dmg files..."
+          else
+            echo "No dmg files found in dist/"
+          fi
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ZQRadar-mac-intel
-          path: dist/ZQRadar-mac-intel.app.zip
+          name: ZQRadar-mac
+          path: dist/*.zip
