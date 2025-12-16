@@ -1,4 +1,3 @@
-.github/workflows/build-mac.yml
 name: Build macOS Electron App
 
 on:
