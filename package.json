@@ -4,9 +4,5 @@
   "main": "index.js",
   "scripts": {
   "build": "electron-builder"
-}
-  "devDependencies": {
-  "electron": "^26.0.0",
-  "electron-builder": "^24.0.0"
-}
+  }
 }
